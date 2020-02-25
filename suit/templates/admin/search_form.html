@@ -27,8 +27,13 @@
         &nbsp;
         {% if show_result_count %}
           <span class="small quiet result-count">{% blocktrans count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktrans %}
-            &nbsp; <a href="?{% if cl.is_popup %}{{ POPUP_VAR }}=1{% endif %}">
-              {% blocktrans with full_result_count=cl.full_result_count %}{{ full_result_count }} total{% endblocktrans %}</a></span>
+            {% comment %}
+              We should use if cl.show_full_result_count here, as django does, but due to this bug https://code.djangoproject.com/ticket/24426, we can't
+              Note that the bug was fixed in django but this suit is old and unmaintained.
+              Note that we really don't want to show any link if show_full_result_count is False
+              Note that this change will prevent show all in any page that uses search_form; this might not be what we
+              what, but hey, let's fix this django suit deadend for good, shall we?
+            {% endcomment %}
         {% endif %}
       </div>
 
